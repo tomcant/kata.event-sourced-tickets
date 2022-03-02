@@ -1,0 +1,12 @@
+{
+    "name": "aardling/kata.concert",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Aardling\\Concerts\\": ["src/", "tests/"]
+        }
+    },
+    "require": {
+        "phpunit/phpunit": "^9.5"
+    }
+}

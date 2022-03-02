@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd $(dirname $0)
+
+docker run --rm -it \
+  --volume $(pwd)/..:/app \
+  --volume ${COMPOSER_HOME:-$HOME/.composer}:/tmp \
+  composer \
+  composer $@

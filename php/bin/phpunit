@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd $(dirname $0)
+
+docker run -it --rm --init \
+    -v $(pwd)/..:/code \
+    -w=/code \
+    php:8-cli \
+    /code/vendor/bin/phpunit $@
