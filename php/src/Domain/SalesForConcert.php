@@ -2,28 +2,31 @@
 
 namespace Aardling\Concerts\Domain;
 
-use Aardling\Concerts\DomainEvent;
+use Aardling\Concerts\Aggregate;
 
-class SalesForConcert
+class SalesForConcert extends Aggregate
 {
-    /**
-     * @param DomainEvent[] $events
-     */
-    public static function buildFromHistory(array $events): self
-    {
-        //@todo do something here
-    }
+    private string $concertId;
+    private string $capacity;
+    private int $numberOfTicketsSold = 0;
 
     public function buyTickets(string $customerId, int $quantity): void
     {
-        //@todo do something here
+        $this->raise(new TicketsSold($this->concertId, $customerId, $quantity));
     }
 
-    /**
-     * @return DomainEvent[]
-     */
-    public function getRecordedChanges(): array
+    protected function applyConcertPlanned(ConcertPlanned $event): void
     {
-        //@todo do something here
+        $this->concertId = $event->getConcertId();
+        $this->capacity = $event->getCapacity();
+    }
+
+    protected function applyTicketsSold(TicketsSold $event): void
+    {
+        if ($this->numberOfTicketsSold + $event->getQuantity() > $this->capacity) {
+            throw new NoTicketsAvailableAnymore();
+        }
+
+        $this->numberOfTicketsSold += $event->getQuantity();
     }
 }

@@ -9,6 +9,11 @@ class ConcertPlanned implements DomainEvent
     private string $concertId;
     private int $capacity;
 
+    public function getType(): string
+    {
+        return 'ConcertPlanned';
+    }
+
     /**
      * @param string $concertId
      * @param int $capacity

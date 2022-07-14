@@ -10,6 +10,11 @@ class TicketsSold implements DomainEvent
     private string $customerId;
     private int $quantity;
 
+    public function getType(): string
+    {
+        return 'TicketsSold';
+    }
+
     /**
      * @param string $concertId
      * @param string $customerId
